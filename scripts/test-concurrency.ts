@@ -64,7 +64,7 @@ async function testReservationLifecycle() {
   console.log('\n🧪 Testing reservation lifecycle (create -> confirm -> complete)...');
 
   const product = await prisma.product.create({
-    data: { name: 'Lifecycle Test Product', sku: `LIFECYCLE-${Date.now()}` },
+    data: { name: 'Lifecycle Test Product', sku: `LIFECYCLE-${Date.now()}`, price: 99.99 },
   });
 
   const warehouse = await prisma.warehouse.create({

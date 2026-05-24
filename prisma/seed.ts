@@ -5,109 +5,140 @@ const { PrismaClient } = pkg as any
 const prisma = new PrismaClient()
 
 async function main() {
+
   console.log('🌱 Starting database seed...')
+
+  // =========================
+  // CLEAR OLD DATA
+  // =========================
+
+  await prisma.inventory.deleteMany()
+  await prisma.reservation.deleteMany()
+  await prisma.product.deleteMany()
+  await prisma.warehouse.deleteMany()
 
   // =========================
   // WAREHOUSES
   // =========================
 
-  const bangalore = await prisma.warehouse.create({
-    data: {
-      name: 'Bangalore Warehouse',
-      city: 'Bangalore',
-      address: 'Whitefield, Bangalore',
-    },
-  })
+  const bangalore =
+    await prisma.warehouse.create({
+      data: {
+        name: 'Bangalore Warehouse',
+        city: 'Bangalore',
+        address:
+          'Whitefield, Bangalore',
+      },
+    })
 
-  const mumbai = await prisma.warehouse.create({
-    data: {
-      name: 'Mumbai Warehouse',
-      city: 'Mumbai',
-      address: 'Andheri East, Mumbai',
-    },
-  })
+  const mumbai =
+    await prisma.warehouse.create({
+      data: {
+        name: 'Mumbai Warehouse',
+        city: 'Mumbai',
+        address:
+          'Andheri East, Mumbai',
+      },
+    })
 
-  const delhi = await prisma.warehouse.create({
-    data: {
-      name: 'Delhi Warehouse',
-      city: 'Delhi',
-      address: 'Connaught Place, Delhi',
-    },
-  })
+  const delhi =
+    await prisma.warehouse.create({
+      data: {
+        name: 'Delhi Warehouse',
+        city: 'Delhi',
+        address:
+          'Connaught Place, Delhi',
+      },
+    })
 
-  const hyderabad = await prisma.warehouse.create({
-    data: {
-      name: 'Hyderabad Warehouse',
-      city: 'Hyderabad',
-      address: 'Hitech City, Hyderabad',
-    },
-  })
+  const hyderabad =
+    await prisma.warehouse.create({
+      data: {
+        name: 'Hyderabad Warehouse',
+        city: 'Hyderabad',
+        address:
+          'Hitech City, Hyderabad',
+      },
+    })
 
-  const chennai = await prisma.warehouse.create({
-    data: {
-      name: 'Chennai Warehouse',
-      city: 'Chennai',
-      address: 'OMR, Chennai',
-    },
-  })
+  const chennai =
+    await prisma.warehouse.create({
+      data: {
+        name: 'Chennai Warehouse',
+        city: 'Chennai',
+        address: 'OMR, Chennai',
+      },
+    })
 
   // =========================
   // PRODUCTS
   // =========================
 
-  const iphone = await prisma.product.create({
-    data: {
-      name: 'iPhone 16 Pro',
-      sku: 'IPHONE16PRO',
-      description: 'Apple flagship smartphone',
-      price: 129999,
-    },
-  })
+  const iphone =
+    await prisma.product.create({
+      data: {
+        name: 'iPhone 16 Pro',
+        sku: 'IPHONE16PRO',
+        description:
+          'Apple flagship smartphone',
+        price: 129999,
+      },
+    })
 
-  const macbook = await prisma.product.create({
-    data: {
-      name: 'MacBook Pro M4',
-      sku: 'MACBOOKM4',
-      description: 'Apple M4 high-performance laptop',
-      price: 249999,
-    },
-  })
+  const macbook =
+    await prisma.product.create({
+      data: {
+        name: 'MacBook Pro M4',
+        sku: 'MACBOOKM4',
+        description:
+          'Apple M4 laptop',
+        price: 249999,
+      },
+    })
 
-  const airpods = await prisma.product.create({
-    data: {
-      name: 'AirPods Pro',
-      sku: 'AIRPODSPRO',
-      description: 'Apple wireless earbuds',
-      price: 24999,
-    },
-  })
+  const airpods =
+    await prisma.product.create({
+      data: {
+        name: 'AirPods Pro',
+        sku: 'AIRPODSPRO',
+        description:
+          'Apple earbuds',
+        price: 24999,
+      },
+    })
 
-  const samsung = await prisma.product.create({
-    data: {
-      name: 'Samsung S25 Ultra',
-      sku: 'SAMSUNGS25',
-      description: 'Samsung flagship smartphone',
-      price: 119999,
-    },
-  })
+  const samsung =
+    await prisma.product.create({
+      data: {
+        name: 'Samsung S25 Ultra',
+        sku: 'SAMSUNGS25',
+        description:
+          'Samsung flagship phone',
+        price: 119999,
+      },
+    })
 
-  const ipad = await prisma.product.create({
-    data: {
-      name: 'iPad Pro',
-      sku: 'IPADPRO',
-      description: 'Apple tablet device',
-      price: 89999,
-    },
-  })
+  const ipad =
+    await prisma.product.create({
+      data: {
+        name: 'iPad Pro',
+        sku: 'IPADPRO',
+        description:
+          'Apple tablet',
+        price: 89999,
+      },
+    })
 
-  const sony = await prisma.product.create({
-    data: {
-      name: 'Sony WH1000XM5',
-      sku: 'SONYXM5',
-      description: 'Sony premium noise cancelling headphones',
-      price: 34999,
-    },
-  })
+  const sony =
+    await prisma.product.create({
+      data: {
+        name: 'Sony WH1000XM5',
+        sku: 'SONYXM5',
+        description:
+          'Sony headphones',
+        price: 34999,
+      },
+    })
 
   // =========================
   // INVENTORY
@@ -116,7 +147,6 @@ async function main() {
   await prisma.inventory.createMany({
     data: [
 
-      // iPhone
       {
         productId: iphone.id,
         warehouseId: bangalore.id,
@@ -130,7 +160,6 @@ async function main() {
         reservedStock: 0,
       },
 
-      // MacBook
       {
         productId: macbook.id,
         warehouseId: bangalore.id,
@@ -144,7 +173,6 @@ async function main() {
         reservedStock: 0,
       },
 
-      // AirPods
       {
         productId: airpods.id,
         warehouseId: mumbai.id,
@@ -158,7 +186,6 @@ async function main() {
         reservedStock: 0,
       },
 
-      // Samsung
       {
         productId: samsung.id,
         warehouseId: delhi.id,
@@ -172,7 +199,6 @@ async function main() {
         reservedStock: 0,
       },
 
-      // iPad
       {
         productId: ipad.id,
         warehouseId: bangalore.id,
@@ -186,7 +212,6 @@ async function main() {
         reservedStock: 0,
       },
 
-      // Sony Headphones
       {
         productId: sony.id,
         warehouseId: mumbai.id,
@@ -202,7 +227,9 @@ async function main() {
     ],
   })
 
-  console.log('✅ Database seeded successfully!')
+  console.log(
+    '✅ Database seeded successfully!'
+  )
 }
 
 main()

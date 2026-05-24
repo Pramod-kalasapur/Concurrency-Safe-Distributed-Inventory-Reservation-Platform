@@ -41,6 +41,7 @@ npm run dev -- -p 3001
 ```
 
 Open **http://localhost:3001** and try reserving items. The database runs on port 5433 to avoid conflicts with other PostgreSQL instances.
+live hosted on vercel : ** https://allo-inventory-pramod-six.vercel.app?_vercel_share=5HrxwKF8PiHALi1RciKlkGOKNJzAGYMa **
 
 ##  How It Works
 

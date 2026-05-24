@@ -1,9 +1,6 @@
 'use client'
 
-import {
-  useEffect,
-  useState,
-} from 'react'
+import { useEffect, useState } from 'react'
 
 export function ActiveReservations() {
 
@@ -12,24 +9,32 @@ export function ActiveReservations() {
     setReservations,
   ] = useState<any[]>([])
 
+  const [
+    loading,
+    setLoading,
+  ] = useState(true)
+
   async function fetchReservations() {
 
     try {
 
-      const res = await fetch(
-        '/api/reservations/active',
-        {
-          cache: 'no-store',
-        }
-      )
+      const res =
+        await fetch(
+          '/api/reservations'
+        )
 
-      const data = await res.json()
+      const data =
+        await res.json()
 
       setReservations(data)
 
     } catch (err) {
 
       console.error(err)
+
+    } finally {
+
+      setLoading(false)
     }
   }
 
@@ -48,171 +53,91 @@ export function ActiveReservations() {
 
   }, [])
 
-  async function confirmReservation(
-    id: string
-  ) {
+  if (loading) {
 
-    try {
-
-      const res = await fetch(
-        `/api/reservations/${id}/confirm`,
-        {
-          method: 'POST',
-        }
-      )
-
-      const data = await res.json()
-
-      if (!res.ok) {
-        throw new Error(
-          data.error
-        )
-      }
-
-      alert(
-        'Reservation confirmed'
-      )
-
-      fetchReservations()
-
-    } catch (err: any) {
-
-      alert(err.message)
-    }
-  }
-
-  async function cancelReservation(
-    id: string
-  ) {
-
-    try {
-
-      const res = await fetch(
-        `/api/reservations/${id}/release`,
-        {
-          method: 'POST',
-        }
-      )
-
-      const data = await res.json()
-
-      if (!res.ok) {
-        throw new Error(
-          data.error
-        )
-      }
-
-      alert(
-        'Reservation cancelled'
-      )
-
-      fetchReservations()
-
-    } catch (err: any) {
-
-      alert(err.message)
-    }
-  }
-
-  if (
-    reservations.length === 0
-  ) {
     return (
-      <div className="empty-state">
-        No active reservations
+      <div>
+        Loading reservations...
       </div>
     )
   }
 
   return (
-    <div className="product-grid">
+    <section className="surface-card">
 
-      {reservations.map(
-        (reservation) => {
+      <h2>
+        Active Reservations
+      </h2>
 
-          return (
-            <section
-              key={reservation.id}
-              className="product-card"
-            >
+      {reservations.length === 0 ? (
 
-              <div className="product-card__header">
+        <p>
+          No active reservations
+        </p>
 
-                <div>
+      ) : (
 
-                  <h3>
-                    {
-                      reservation
-                        .inventory
-                        ?.product
-                        ?.name
-                    }
-                  </h3>
+        <div
+          style={{
+            display: 'grid',
+            gap: '1rem',
+            marginTop: '1rem',
+          }}
+        >
 
-                  <p>
-                    {
-                      reservation
-                        .inventory
-                        ?.warehouse
-                        ?.name
-                    }
-                  </p>
-                </div>
+          {reservations.map(
+            (reservation) => (
 
-                <span className="sku-badge">
+              <div
+                key={reservation.id}
+                style={{
+                  border:
+                    '1px solid #333',
+                  padding: '1rem',
+                  borderRadius: '12px',
+                }}
+              >
+
+                <h3>
+                  {
+                    reservation
+                      ?.inventory
+                      ?.product
+                      ?.name
+                  }
+                </h3>
+
+                <p>
+                  Warehouse:{' '}
+                  {
+                    reservation
+                      ?.inventory
+                      ?.warehouse
+                      ?.name
+                  }
+                </p>
+
+                <p>
+                  Quantity:{' '}
+                  {
+                    reservation.quantity
+                  }
+                </p>
+
+                <p>
+                  Status:{' '}
                   {
                     reservation.status
                   }
-                </span>
+                </p>
+
               </div>
+            )
+          )}
 
-              <div className="warehouse-list">
-
-                <div className="warehouse-row">
-
-                  <div>
-
-                    <strong>
-                      Quantity
-                    </strong>
-
-                    <span>
-                      {
-                        reservation.quantity
-                      }
-                    </span>
-                  </div>
-                </div>
-
-                <div className="warehouse-row">
-
-                  <button
-                    onClick={() =>
-                      confirmReservation(
-                        reservation.id
-                      )
-                    }
-                    className="button button-primary"
-                  >
-                    Confirm
-                  </button>
-
-                  <button
-                    onClick={() =>
-                      cancelReservation(
-                        reservation.id
-                      )
-                    }
-                    className="button button-danger"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </section>
-          )
-        }
+        </div>
       )}
-    </div>
+
+    </section>
   )
 }

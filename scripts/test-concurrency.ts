@@ -10,7 +10,11 @@ async function testConcurrentReservations() {
 
   // Create test data
   const product = await prisma.product.create({
-    data: { name: 'Test Product', sku: `TEST-${Date.now()}` },
+    data: {
+  name: 'Test Product',
+  sku: `TEST-${Date.now()}`,
+  price: 99999,
+},
   });
 
   const warehouse = await prisma.warehouse.create({

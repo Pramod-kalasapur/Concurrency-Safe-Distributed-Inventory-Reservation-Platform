@@ -16,6 +16,7 @@ Inventory overselling causes customer service headaches, revenue loss, and damag
 - Automatic inventory cleanup and expiration handling
 - Built-in rate limiting and comprehensive audit trails
 - Real-time monitoring with health checks and metrics dashboards
+- data base connection, data seeding 
 
 ##  Quick Start
 

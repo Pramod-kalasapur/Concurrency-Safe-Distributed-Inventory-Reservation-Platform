@@ -8,6 +8,8 @@ export async function GET() {
 
   try {
 
+    const now = new Date()
+
     const reservations =
       await prisma.reservation.findMany({
 
@@ -17,6 +19,9 @@ export async function GET() {
               'PENDING',
               'CONFIRMED',
             ],
+          },
+          expiresAt: {
+            gt: now,
           },
         },
 

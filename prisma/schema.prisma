@@ -1,0 +1,139 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  RELEASED
+  EXPIRED
+}
+
+enum AuditAction {
+  RESERVATION_CREATED
+  RESERVATION_CONFIRMED
+  RESERVATION_RELEASED
+  RESERVATION_EXPIRED
+}
+
+model Product {
+  id String @id @default(cuid())
+
+  name        String
+  sku         String  @unique
+  description String?
+  price       Float
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  inventories Inventory[]
+
+  @@index([sku])
+}
+
+model Warehouse {
+  id String @id @default(cuid())
+
+  name    String
+  city    String
+  address String?
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  inventories Inventory[]
+}
+
+model Inventory {
+  id String @id @default(cuid())
+
+  productId   String
+  warehouseId String
+
+  totalStock    Int
+  reservedStock Int @default(0)
+
+  version Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  warehouse Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+
+  reservations Reservation[]
+
+  @@unique([productId, warehouseId])
+  @@index([productId])
+  @@index([warehouseId])
+}
+
+model Reservation {
+  id String @id @default(cuid())
+
+  inventoryId String
+
+  quantity Int
+
+  status ReservationStatus
+
+  expiresAt DateTime
+
+  confirmedAt DateTime?
+  releasedAt  DateTime?
+
+  idempotencyKey String? @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  inventory Inventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+
+  auditLogs AuditLog[]
+
+  @@index([status])
+  @@index([expiresAt])
+}
+
+model AuditLog {
+  id String @id @default(cuid())
+
+  reservationId String
+
+  action AuditAction
+
+  metadata Json?
+
+  createdAt DateTime @default(now())
+
+  reservation Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+
+  @@index([reservationId])
+}
+
+model IdempotencyRequest {
+  id String @id @default(cuid())
+
+  key String @unique
+
+  endpoint String
+
+  requestHash String
+
+  response Json
+
+  statusCode Int
+
+  createdAt DateTime @default(now())
+
+  @@index([key])
+}

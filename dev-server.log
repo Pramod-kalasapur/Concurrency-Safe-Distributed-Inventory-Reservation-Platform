@@ -1,0 +1,49 @@
+
+> allo-inventory-system@0.1.0 dev
+> next dev -p 3001
+
+   ▲ Next.js 14.0.0
+   - Local:        http://localhost:3001
+   - Environments: .env
+
+ ✓ Ready in 2.6s
+ ✓ Compiled /api/health/route in 271ms (33 modules)
+ ○ Compiling /page ...
+ ✓ Compiled /page in 1331ms (479 modules)
+ ✓ Compiled /api/metrics/route in 152ms (255 modules)
+ ○ Compiling /reserve/page ...
+ ✓ Compiled /reserve/page in 1309ms (475 modules)
+ ○ Compiling /api/reservations/route ...
+ ✓ Compiled /api/reservations/route in 519ms (257 modules)
+ ✓ Compiled /reservation/page in 371ms (495 modules)
+ ✓ Compiled /api/reservations/[id]/route in 159ms (264 modules)
+ ✓ Compiled /api/reservations/[id]/confirm/route in 224ms (266 modules)
+ ✓ Compiled /page in 337ms (273 modules)
+   Reload env: .env
+ ✓ Compiled in 730ms (464 modules)
+   Reload env: .env
+ ✓ Compiled in 133ms (464 modules)
+   Reload env: .env
+ ✓ Compiled in 596ms (464 modules)
+   Reload env: .env
+ ✓ Compiled in 201ms (464 modules)
+   Reload env: .env
+ ✓ Compiled in 135ms (464 modules)
+   Reload env: .env
+ ✓ Compiled in 99ms (464 modules)
+   Reload env: .env
+ ✓ Compiled in 154ms (464 modules)
+   Reload env: .env
+ ✓ Compiled in 84ms (464 modules)
+   Reload env: .env
+ ✓ Compiled in 106ms (464 modules)
+ ✓ Compiled in 115ms (464 modules)
+ ✓ Compiled in 111ms (464 modules)
+ ✓ Compiled in 78ms (464 modules)
+   Reload env: .env
+ ✓ Compiled in 162ms (464 modules)
+   Reload env: .env
+ ✓ Compiled in 114ms (464 modules)
+ ✓ Compiled in 100ms (464 modules)
+ ✓ Compiled in 174ms (464 modules)
+ ✓ Compiled in 1299ms (224 modules)

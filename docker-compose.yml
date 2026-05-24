@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: allo_inventory_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: allo
+      POSTGRES_PASSWORD: allo_password
+      POSTGRES_DB: allo_inventory
+    ports:
+      - "5433:5432"
+    volumes:
+      - allo_inventory_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U allo -d allo_inventory"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  allo_inventory_postgres_data:

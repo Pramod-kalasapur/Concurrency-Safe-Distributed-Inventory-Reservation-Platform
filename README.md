@@ -354,7 +354,7 @@ vercel.json                    # Deploy config + Cron
 
 When you're ready to scale:
 
-1. **Redis-backed rate limiting**: Replace in-memory limiter with Upstash Redis
+1. **Redis-backed **: Replace in-memory limiter with Upstash Redis
 2. **Distributed caching**: Cache product availability with short TTL
 3. **Structured logging & tracing**: Correlate requests across services
 4. **Admin dashboard**: Visualize audit logs, run reports

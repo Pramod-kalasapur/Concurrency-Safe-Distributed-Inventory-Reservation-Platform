@@ -62,26 +62,35 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(req: Request) {
 
   try {
 
+    const { searchParams } = new URL(req.url)
+    const status = searchParams.get('status')
+
     const now = new Date()
+
+    const whereClause: any = {
+      expiresAt: {
+        gt: now,
+      },
+    }
+
+    if (status === 'PENDING') {
+      whereClause.status = 'PENDING'
+    } else if (status === 'CONFIRMED') {
+      whereClause.status = 'CONFIRMED'
+    } else {
+      whereClause.status = {
+        in: ['PENDING', 'CONFIRMED'],
+      }
+    }
 
     const reservations =
       await prisma.reservation.findMany({
 
-        where: {
-          status: {
-            in: [
-              'PENDING',
-              'CONFIRMED',
-            ],
-          },
-          expiresAt: {
-            gt: now,
-          },
-        },
+        where: whereClause,
 
         include: {
           inventory: {

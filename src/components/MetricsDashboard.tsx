@@ -1,63 +1,218 @@
-'use client';
+'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react'
 
 const metricItems = [
-  { key: 'activeReservations', label: 'Active Reservations' },
-  { key: 'confirmedReservations', label: 'Confirmed' },
-  { key: 'releasedReservations', label: 'Released' },
-  { key: 'expiredReservations', label: 'Expired' },
-  { key: 'totalStock', label: 'Total Stock' },
-  { key: 'availableStock', label: 'Available Stock' },
-  { key: 'reservedStock', label: 'Reserved' },
-  { key: 'totalReservations', label: 'Total Reservations' },
-];
+  {
+    key: 'activeReservations',
+    label: 'Active Reservations',
+  },
+  {
+    key: 'confirmedReservations',
+    label: 'Confirmed',
+  },
+  {
+    key: 'releasedReservations',
+    label: 'Released',
+  },
+  {
+    key: 'expiredReservations',
+    label: 'Expired',
+  },
+  {
+    key: 'totalStock',
+    label: 'Total Stock',
+  },
+  {
+    key: 'availableStock',
+    label: 'Available Stock',
+  },
+  {
+    key: 'reservedStock',
+    label: 'Reserved',
+  },
+  {
+    key: 'totalReservations',
+    label: 'Total Reservations',
+  },
+]
 
-export const MetricsDashboard: React.FC = () => {
-  const [metrics, setMetrics] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export const MetricsDashboard:
+  React.FC = () => {
+
+  const [
+    metrics,
+    setMetrics,
+  ] = useState<any>(null)
+
+  const [
+    loading,
+    setLoading,
+  ] = useState(true)
+
+  const [
+    error,
+    setError,
+  ] = useState<string | null>(
+    null
+  )
 
   useEffect(() => {
+
     async function fetchMetrics() {
+
       try {
-        const res = await fetch('/api/metrics');
-        if (!res.ok) throw new Error('Failed to fetch metrics');
-        setMetrics(await res.json());
-        setError(null);
+
+        const res =
+          await fetch(
+            '/api/metrics'
+          )
+
+        if (!res.ok) {
+          throw new Error(
+            'Failed to fetch metrics'
+          )
+        }
+
+        const data =
+          await res.json()
+
+        setMetrics(data)
+
+        setError(null)
+
       } catch (err: any) {
-        setError(err?.message ?? 'Failed to fetch metrics');
+
+        setError(
+          err?.message ??
+            'Failed to fetch metrics'
+        )
+
       } finally {
-        setLoading(false);
+
+        setLoading(false)
       }
     }
-    fetchMetrics();
-    const interval = setInterval(fetchMetrics, 5000);
-    return () => clearInterval(interval);
-  }, []);
 
-  if (loading) return <div className="surface-card loading-card">Loading metrics...</div>;
-  if (error) return <div className="surface-card error-card">{error}</div>;
-  if (!metrics) return null;
+    fetchMetrics()
+
+    const interval =
+      setInterval(
+        fetchMetrics,
+        5000
+      )
+
+    return () =>
+      clearInterval(interval)
+
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="surface-card loading-card">
+        Loading metrics...
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="surface-card error-card">
+        {error}
+      </div>
+    )
+  }
+
+  if (!metrics) {
+    return null
+  }
 
   return (
-    <section className="metrics-panel" aria-label="Inventory metrics">
+    <section
+      className="metrics-panel"
+      aria-label="Inventory metrics"
+    >
+
       <div className="metrics-panel__header">
+
         <div>
-          <h2>Operations Snapshot</h2>
-          <p>Auto-refreshes every 5 seconds</p>
+          <h2>
+            Operations Snapshot
+          </h2>
+
+          <p>
+            Auto-refreshes every
+            5 seconds
+          </p>
         </div>
-        <span>{(metrics.reservationSuccessRate * 100).toFixed(1)}% success rate</span>
+
+        <div
+          style={{
+            display: 'flex',
+            gap: '1rem',
+            alignItems: 'center',
+          }}
+        >
+
+          <span
+            style={{
+              background:
+                '#eef4ff',
+              color: '#2563eb',
+              padding:
+                '0.5rem 1rem',
+              borderRadius:
+                '999px',
+              fontWeight: 700,
+              fontSize: '0.9rem',
+              border:
+                '1px solid #c7d2fe',
+            }}
+          >
+            {metrics.reservationSuccessRate.toFixed(
+              1
+            )}
+            % success rate
+          </span>
+
+        </div>
       </div>
 
       <div className="metrics-grid">
-        {metricItems.map((item) => (
-          <div className="metric-card" key={item.key}>
-            <span>{item.label}</span>
-            <strong>{metrics[item.key]}</strong>
-          </div>
-        ))}
+
+        {metricItems.map(
+          (item) => (
+
+            <div
+              className="metric-card"
+              key={item.key}
+            >
+
+              <span>
+                {item.label}
+              </span>
+
+              <strong>
+
+                {typeof metrics[
+                  item.key
+                ] === 'number'
+                  ? metrics[
+                      item.key
+                    ]
+                  : 0}
+
+              </strong>
+
+            </div>
+          )
+        )}
+
       </div>
+
     </section>
-  );
-};
+  )
+}

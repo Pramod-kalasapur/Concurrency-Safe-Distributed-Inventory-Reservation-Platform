@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { MetricsDashboard } from '../components/MetricsDashboard'
 import { ActiveReservations } from '../components/ActiveReservations'
+import { ConfirmedReservations } from '../components/ConfirmedReservations'
 import { ProductListContainer } from '../components/ProductListContainer'
 import { prisma } from '../lib/prisma'
 
@@ -134,6 +135,25 @@ export default async function HomePage() {
       </section>
 
       <ActiveReservations />
+
+      {/* CONFIRMED RESERVATIONS */}
+
+      <section className="section-header mt-12">
+
+        <div>
+
+          <h2>
+            Confirmed Reservations
+          </h2>
+
+          <p>
+            View all confirmed
+            and completed reservations
+          </p>
+        </div>
+      </section>
+
+      <ConfirmedReservations />
 
     </main>
   )

@@ -1,13 +1,13 @@
 # Quick Setup Checklist
 
-## ✅ Pre-flight Checks
+## Pre-flight Checks
 
 - [ ] Node.js 18+ installed: `node --version`
 - [ ] npm installed: `npm --version`
 - [ ] PostgreSQL database ready (Neon/Supabase or local)
 - [ ] Git repository initialized
 
-## 🚀 Local Development (5 minutes)
+##  Local Development (5 minutes)
 
 ```bash
 # 1. Install dependencies
@@ -31,17 +31,17 @@ npm run dev
 open http://localhost:3000
 ```
 
-## 🧪 Run Tests
+##  Run Tests
 
 ```bash
 # Concurrency stress test (50 concurrent on 5-item stock)
 npm run test:concurrency
 
 # Expected: 5 succeed, 45 get 409 Conflict
-# Result: ✅ PASS
+# Result:  PASS
 ```
 
-## 🌐 Manual Testing
+##  Manual Testing
 
 1. Browse http://localhost:3000 → See products and warehouses
 2. Click "Reserve" on any product
@@ -51,7 +51,7 @@ npm run test:concurrency
 6. Click "Confirm Purchase" to complete
 7. Verify stock decremented on home page
 
-## 📦 Build & Deploy
+##  Build & Deploy
 
 ```bash
 # Build for production
@@ -61,7 +61,7 @@ npm run build
 vercel --prod
 ```
 
-## 📊 Database Queries (psql)
+##  Database Queries (psql)
 
 ```sql
 -- View active reservations
@@ -74,7 +74,7 @@ SELECT "reservationId", action, "createdAt" FROM "AuditLog" ORDER BY "createdAt"
 SELECT p.name, w.name, i."totalStock" - i."reservedStock" as available FROM "Inventory" i JOIN "Product" p ON i."productId" = p.id JOIN "Warehouse" w ON i."warehouseId" = w.id;
 ```
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### "Cannot find database"
 ```bash
@@ -106,7 +106,7 @@ npm run dev -- -p 3001
 # Reduce test load or use connection pooling
 ```
 
-## 📋 Verification Checklist
+##  Verification Checklist
 
 - [ ] `npm install` succeeds
 - [ ] `npm run prisma:migrate` completes
@@ -120,7 +120,7 @@ npm run dev -- -p 3001
 - [ ] `npm run test:concurrency` passes
 - [ ] All 12 API routes respond
 
-## 📞 Support
+##  Support
 
 See README.md for architecture details
 See DEPLOYMENT.md for production deployment
@@ -128,4 +128,4 @@ See SUMMARY.md for complete feature list
 
 ---
 
-**Setup complete! Happy testing! 🎉**
+**Setup complete! Happy testing! **
